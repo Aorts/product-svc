@@ -1,4 +1,4 @@
-import { createProductFromDTO, Product, updateProductFromDTO } from "../../domain/product";
+import { createProductFromDTO, Product, ProductPagination, updateProductFromDTO } from "../../domain/product";
 import { ProductRepository } from "../../port/repository";
 
 
@@ -33,11 +33,15 @@ export class ProductService {
     return p;
   }
 
-  public async getProducts(options?: { sortBy?: string ; order?: string }): Promise<Product[]> {
+  public async getProducts(options?: { sortBy?: string ; order?: string, page?: number, limit?: number }): Promise<ProductPagination> {
     const sortBy = options?.sortBy ?? "price";
     const order = options?.order ?? "desc";
+    const page = options?.page ?? 1;
+    const limit = options?.limit ?? 10;
+
     this.validateSortOptions(sortBy, order);
-    return this.productRepository.list(sortBy, order);
+    const Products = await this.productRepository.list(sortBy, order, page, limit);
+    return Products;
   }
 
   public async updateProduct(product: any): Promise<void> {

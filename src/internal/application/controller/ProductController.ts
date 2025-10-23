@@ -31,7 +31,10 @@ export function ProductController(repo: ProductRepository) {
     try {
       const sortBy = req.query.sortBy as string;
       const order = req.query.order as string;
-      const products = await productService.getProducts({ sortBy, order });
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const products = await productService.getProducts({ sortBy, order, page, limit });
       res.status(StatusCodes.OK).json(success(products, "success", 0));
     } catch (err) { next(err); }
   };

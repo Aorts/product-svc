@@ -75,3 +75,10 @@ function validateRequestBody(dto: any)  {
     throw new AppError("Invalid 'is_published'", 400, "INVALID_IS_PUBLISHED");
   }
 }
+
+export interface ProductPagination {
+  Products: Product[];
+  page: number;
+  limit: number;
+  hasNextPage?: boolean;
+}

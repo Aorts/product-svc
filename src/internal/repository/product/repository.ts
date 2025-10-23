@@ -18,10 +18,15 @@ export class MongooseProductRepository implements ProductRepository {
     return doc ? new Product(doc._id.toString(), doc.name, doc.price || 0, doc.description || "", doc.stock_quantity || 0, doc.reserved_quantity || 0, doc.sold_quantity || 0, doc.is_published || false, doc.created_at, doc.updated_at) : null;
   }
 
-  async list(sortBy: string, order: string) {
+  async list(sortBy: string, order: string, page: number, limit: number) {
     const sortOrder = order === "asc" ? 1 : -1;
-    const docs = await ProductModel.find().sort({ [sortBy]: sortOrder }).lean();
-    return docs.map(d => new Product(d._id.toString(), d.name, d.price || 0, d.description || "", d.stock_quantity || 0, d.reserved_quantity || 0, d.sold_quantity || 0, d.is_published || false, d.created_at, d.updated_at ));
+    const docs = await ProductModel.find().sort({ [sortBy]: sortOrder }).skip((page - 1) * limit).limit(limit+1).lean();
+    return {
+      Products: docs.slice(0, limit).map(doc => new Product(doc._id.toString(), doc.name, doc.price || 0, doc.description || "", doc.stock_quantity || 0, doc.reserved_quantity || 0, doc.sold_quantity || 0, doc.is_published || false, doc.created_at, doc.updated_at)),
+      page,
+      limit,
+      hasNextPage: docs.length > limit
+    };
   }
   
   async update(product: Product) {
