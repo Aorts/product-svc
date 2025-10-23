@@ -1,6 +1,10 @@
-import { createProductFromDTO, Product, ProductPagination, updateProductFromDTO } from "../../domain/product";
+import {
+  createProductFromDTO,
+  Product,
+  ProductPagination,
+  updateProductFromDTO,
+} from "../../domain/product";
 import { ProductRepository } from "../../port/repository";
-
 
 export class ProductService {
   private readonly productRepository: ProductRepository;
@@ -10,11 +14,15 @@ export class ProductService {
     const validOrder = ["asc", "desc"];
 
     if (!validSortBy.includes(sortBy)) {
-      throw new Error(`Invalid sortBy value. Must be one of: ${validSortBy.join(", ")}`);
+      throw new Error(
+        `Invalid sortBy value. Must be one of: ${validSortBy.join(", ")}`,
+      );
     }
 
     if (!validOrder.includes(order)) {
-      throw new Error(`Invalid order value. Must be one of: ${validOrder.join(", ")}`);
+      throw new Error(
+        `Invalid order value. Must be one of: ${validOrder.join(", ")}`,
+      );
     }
   }
   constructor(productRepository: ProductRepository) {
@@ -33,14 +41,24 @@ export class ProductService {
     return p;
   }
 
-  public async getProducts(options?: { sortBy?: string ; order?: string, page?: number, limit?: number }): Promise<ProductPagination> {
+  public async getProducts(options?: {
+    sortBy?: string;
+    order?: string;
+    page?: number;
+    limit?: number;
+  }): Promise<ProductPagination> {
     const sortBy = options?.sortBy ?? "price";
     const order = options?.order ?? "desc";
     const page = options?.page ?? 1;
     const limit = options?.limit ?? 10;
 
     this.validateSortOptions(sortBy, order);
-    const Products = await this.productRepository.list(sortBy, order, page, limit);
+    const Products = await this.productRepository.list(
+      sortBy,
+      order,
+      page,
+      limit,
+    );
     return Products;
   }
 
@@ -55,4 +73,3 @@ export class ProductService {
     await this.productRepository.delete(id);
   }
 }
-

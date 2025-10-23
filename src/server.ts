@@ -3,8 +3,11 @@ import { config } from "./config/config";
 import { connectMongo, disconnectMongo } from "./infrastructure/db/mongo";
 import { logger } from "./utility/logger";
 import { buildRouter } from "./internal/api/route/route";
-import { MongooseProductRepository} from "./internal/repository/product/repository";
-import { errorMiddleware, requestLogger } from "./internal/api/middleware/middleware";
+import { MongooseProductRepository } from "./internal/repository/product/repository";
+import {
+  errorMiddleware,
+  requestLogger,
+} from "./internal/api/middleware/middleware";
 
 async function main() {
   await connectMongo(config.MONGO_URI);
@@ -16,7 +19,7 @@ async function main() {
   app.use(errorMiddleware);
 
   const server = app.listen(config.PORT, () =>
-    logger.info({ port: config.PORT }, "http server started")
+    logger.info({ port: config.PORT }, "http server started"),
   );
 
   const shutdown = async (signal: string) => {

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { logger } from '../../utility/logger';
+import mongoose from "mongoose";
+import { logger } from "../../utility/logger";
 
 export async function connectMongo(uri: string) {
   try {

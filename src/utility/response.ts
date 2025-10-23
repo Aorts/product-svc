@@ -19,10 +19,7 @@ export function success<T>(
   };
 }
 
-export function failure(
-  message: string,
-  code: number,
-): ApiResponse<null> {
+export function failure(message: string, code: number): ApiResponse<null> {
   return {
     status: { code, message },
     data: null,

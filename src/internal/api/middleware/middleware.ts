@@ -8,7 +8,7 @@ export function errorMiddleware(
   err: any,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const statusCode = err.status || StatusCodes.INTERNAL_SERVER_ERROR;
   const message = err.message || "Internal Server Error";
@@ -21,7 +21,7 @@ export function errorMiddleware(
         error: err.stack || err,
         correlationId: (req as any).correlationId,
       },
-      "Internal Server Error"
+      "Internal Server Error",
     );
   }
   res.status(statusCode).json(failure(message, statusCode));
@@ -37,13 +37,13 @@ export function requestLogger(req: Request, res: Response, next: NextFunction) {
     const end = process.hrtime.bigint();
     const durationMs = Number(end - start) / 1_000_000;
     if (res.statusCode == 200) {
-    logger.info({
-      method: req.method,
-      url: req.originalUrl,
-      status: res.statusCode,
-      duration: `${durationMs.toFixed(2)} ms`,
-      correlationId,
-    });
+      logger.info({
+        method: req.method,
+        url: req.originalUrl,
+        status: res.statusCode,
+        duration: `${durationMs.toFixed(2)} ms`,
+        correlationId,
+      });
     } else {
       logger.warn({
         method: req.method,
