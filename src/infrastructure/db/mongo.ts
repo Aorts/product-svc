@@ -7,6 +7,7 @@ export async function connectMongo(uri: string) {
       autoIndex: true,
     });
   } catch (error) {
+    logger.error("❌ MongoDB connection failed");
     process.exit(1);
   }
 

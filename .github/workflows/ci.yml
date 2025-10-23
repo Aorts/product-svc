@@ -1,0 +1,23 @@
+# .github/workflows/test.yml
+name: CI
+on:
+  push:
+    branches: ["main "]
+  pull_request:
+
+jobs:
+  setup:
+    name: Setup and Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - name: Setup pnpm
+        uses: ./.github/actions/setup-pnpm
+  test:
+    name: Test
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955
+      - uses: ./.github/actions/setup-pnpm
+      - run: pnpm test
