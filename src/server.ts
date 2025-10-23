@@ -8,11 +8,13 @@ import {
   errorMiddleware,
   requestLogger,
 } from "./internal/api/middleware/middleware";
+import { docsRouter } from "./api-docs/router";
 
 async function main() {
   await connectMongo(config.MONGO_URI);
   const app = express();
   app.use(express.json());
+  app.use(docsRouter());
   app.use(requestLogger);
 
   app.use(buildRouter(new MongooseProductRepository()));

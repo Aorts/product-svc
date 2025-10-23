@@ -1,3 +1,4 @@
+import { AppError } from "../../../../utility/error";
 import {
   createProductFromDTO,
   Product,
@@ -37,7 +38,7 @@ export class ProductService {
 
   public async getProductById(id: string): Promise<Product> {
     const p = await this.productRepository.findById(id);
-    if (!p) throw new Error("Product not found");
+    if (!p) throw new AppError("Product not found", 404, "PRODUCT_NOT_FOUND");
     return p;
   }
 
@@ -64,7 +65,7 @@ export class ProductService {
 
   public async updateProduct(product: any): Promise<void> {
     const existing = await this.productRepository.findById(product._id);
-    if (!existing) throw new Error("Product not found");
+    if (!existing) throw new AppError("Product not found", 404, "PRODUCT_NOT_FOUND");
     const p = updateProductFromDTO(existing, product);
     await this.productRepository.update(p);
   }
