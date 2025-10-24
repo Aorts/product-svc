@@ -1,5 +1,14 @@
-import { OpenAPIRegistry, OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
-import { ApiResponse, CreateProductBody, IdParam, ProductSchema, UpdateProductBody } from "./schemas";
+import {
+  OpenAPIRegistry,
+  OpenApiGeneratorV3,
+} from "@asteasolutions/zod-to-openapi";
+import {
+  ApiResponse,
+  CreateProductBody,
+  IdParam,
+  ProductSchema,
+  UpdateProductBody,
+} from "./schemas";
 import { z } from "zod";
 
 const registry = new OpenAPIRegistry();
@@ -31,7 +40,7 @@ registry.registerPath({
   request: {
     body: {
       content: {
-        "application/json": { schema: CreateProductBody }
+        "application/json": { schema: CreateProductBody },
       },
     },
   },

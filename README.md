@@ -3,6 +3,7 @@
 Minimal, pragmatic starter for a clean Hexagonal (Ports & Adapters) API using **Express + TypeScript + Mongoose**.
 
 ## Features
+
 - Hexagonal structure: **domain / application / repository**
 - MongoDB via **Mongoose** (ObjectId `_id`)
 - Standard JSON response wrapper
@@ -30,6 +31,7 @@ src/
   │   └── response.ts          # Standard response wrapper
   └── server.ts                # Application entry point
 ```
+
 ## Quick Start
 
 ```bash
@@ -49,12 +51,14 @@ pnpm start     # node dist/server.js
 ## ENV
 
 Create .env (or set env vars):
+
 ```
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/productsdb
 ```
 
 ## API Endpoints
+
 - `POST /products` - Create product
 - `GET /products` - List products (with pagination and sorting)
 - `GET /products/:id` - Get product by ID
@@ -63,7 +67,9 @@ MONGO_URI=mongodb://localhost:27017/productsdb
 - `GET /docs` - OpenAPI documentation UI
 
 ## Testing the API
+
 Use curl or Postman to test the API endpoints. Example to create a product:
+
 ```bash
 curl -X POST http://localhost:3000/products \
 -H "Content-Type: application/json" \
@@ -76,4 +82,5 @@ curl -X POST http://localhost:3000/products \
 ```
 
 ## OpenAPI Documentation
+
 Access the OpenAPI documentation at `http://localhost:3000/docs` after starting the server.
